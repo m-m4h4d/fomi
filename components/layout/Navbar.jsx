@@ -18,7 +18,7 @@ export function Navbar() {
     <nav className="flex items-center justify-between px-6 py-3 bg-white dark:bg-[#111111] border-b border-slate-100 dark:border-white/5 sticky top-0 z-50 transition-colors duration-200">
       {/* Left: Logo */}
       <div className="flex items-center gap-3 w-1/3">
-        <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-black dark:text-white">
+        <svg viewBox="0 0 24 24" fill="currentColor" className="w-9 h-9 text-black dark:text-white">
           <path d="M7 3C7 3 17 3 17 6C17 9 10 9 10 9V12H16C16 12 16 15 13 15H10V21H7V3Z" />
         </svg>
       </div>
@@ -26,7 +26,7 @@ export function Navbar() {
       {/* Center: Icon Navigation */}
       <div className="flex flex-col items-center justify-center w-1/3 gap-2">
         {/* Pill Indicator */}
-        <div className="w-64 h-1.5 bg-orange-100 dark:bg-[#2c1d1a] rounded-full relative">
+        <div className="w-[180px] h-1.5 bg-orange-100 dark:bg-[#2c1d1a] rounded-full relative mr-12">
           <div className="absolute left-2 w-10 h-full bg-[#E58873] rounded-full shadow-sm"></div>
         </div>
         

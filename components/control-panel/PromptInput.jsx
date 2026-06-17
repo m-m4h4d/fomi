@@ -8,7 +8,7 @@ export function PromptInput({ value, onChange, onGenerate, isGenerating }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Describe you imaginations to be converted to piece of art ...."
-        className="w-full min-h-[160px] p-5 pb-16 rounded-[24px] border border-white/50 dark:border-white/10 shadow-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#E58873] bg-white dark:bg-[#111111] text-slate-700 dark:text-slate-200 placeholder:text-slate-400 text-[15px] leading-relaxed transition-colors duration-200"
+        className="w-full min-h-[160px] p-5 pb-16 rounded-[24px] border-[1.5px] border-black dark:border-white/20 shadow-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#E58873] bg-white dark:bg-[#111111] text-slate-700 dark:text-slate-200 placeholder:text-slate-400 text-[15px] leading-relaxed transition-colors duration-200"
         aria-label="Prompt description"
       />
       
