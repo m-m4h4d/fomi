@@ -1,37 +1,37 @@
 import React from 'react';
 import { ResultCard } from './ResultCard';
-import { Loader2 } from 'lucide-react';
+import { PromptDetailCard } from './PromptDetailCard';
 
-export function ResultsGrid({ results = [], activeId, onSelect, isLoading = false }) {
-  if (isLoading) {
-    return (
-      <div className="w-full h-full min-h-[300px] flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-2xl bg-white/50">
-        <Loader2 className="w-8 h-8 text-[#FF6B4A] animate-spin mb-4" />
-        <p className="text-slate-500 font-medium animate-pulse">Generating your masterpieces...</p>
-      </div>
+export function ResultsGrid({ results, activeGeneration }) {
+  const gridItems = [];
+  
+  // Insert prompt card at index 4 (so it appears on the second row in desktop 4-column layout)
+  const insertIndex = results.length >= 4 ? 4 : results.length;
+  
+  results.forEach((res, index) => {
+    if (index === insertIndex && activeGeneration) {
+      gridItems.push(
+        <div key="prompt-card" className="w-full">
+          <PromptDetailCard generation={activeGeneration} />
+        </div>
+      );
+    }
+    gridItems.push(
+      <ResultCard key={res.id} result={res} />
     );
-  }
+  });
 
-  if (results.length === 0) {
-    return (
-      <div className="w-full h-full min-h-[300px] flex items-center justify-center border-2 border-dashed border-slate-200 rounded-2xl bg-white/50 text-slate-400">
-        No results to display. Generate something amazing!
+  if (results.length < 4 && activeGeneration) {
+    gridItems.push(
+      <div key="prompt-card" className="w-full">
+        <PromptDetailCard generation={activeGeneration} />
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full pb-8">
-      {results.map((result, i) => (
-        <div key={result.id} className="animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both" style={{ animationDelay: `${i * 100}ms` }}>
-          <ResultCard 
-            url={result.url}
-            type={result.type}
-            isActive={result.id === activeId}
-            onClick={() => onSelect?.(result)}
-          />
-        </div>
-      ))}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 px-6 pb-6">
+      {gridItems}
     </div>
   );
 }

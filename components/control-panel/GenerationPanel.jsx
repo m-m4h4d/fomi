@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { ModeToggle } from './ModeToggle';
 import { PromptInput } from './PromptInput';
-import { GenerateButton } from './GenerateButton';
 import { OptionSelect } from './OptionSelect';
 import { CollapsibleSection } from './CollapsibleSection';
 
@@ -26,19 +25,24 @@ export function GenerationPanel({ onGenerate, isGenerating }) {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-sm mx-auto lg:max-w-none">
+    <div className="flex flex-col gap-5 w-full bg-[#FAF0ED] rounded-[32px] p-6 shadow-sm">
       <ModeToggle value={mode} onChange={setMode} />
       
-      <div className="flex flex-col gap-3">
-        <PromptInput value={prompt} onChange={setPrompt} />
-        <GenerateButton onClick={handleGenerate} isLoading={isGenerating} />
+      <div className="mt-1 mb-4">
+        <PromptInput 
+          value={prompt} 
+          onChange={setPrompt} 
+          onGenerate={handleGenerate} 
+          isGenerating={isGenerating} 
+        />
       </div>
 
-      <div className="flex gap-2 w-full">
+      <div className="flex gap-2 w-full mt-2">
         <OptionSelect 
           value={numImages} 
           onChange={setNumImages}
           ariaLabel="Number of generations"
+          labelPrefix="# Images"
           options={[
             { label: '1', value: '1' },
             { label: '2', value: '2' },
@@ -60,15 +64,16 @@ export function GenerationPanel({ onGenerate, isGenerating }) {
           value={model} 
           onChange={setModel}
           ariaLabel="Model selection"
+          labelPrefix="Model"
           options={[
-            { label: 'Fomi v1', value: 'fomi-v1' },
-            { label: 'Fomi Fast', value: 'fomi-fast' },
-            { label: 'Fomi Pro', value: 'fomi-pro' },
+            { label: 'Name', value: 'fomi-v1' },
+            { label: 'Fast', value: 'fomi-fast' },
+            { label: 'Pro', value: 'fomi-pro' },
           ]} 
         />
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 mt-1">
         <CollapsibleSection title="Advance">
           <div className="text-sm text-slate-500 py-2">
             Advanced settings like negative prompt, seed, and steps would go here.

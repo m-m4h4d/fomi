@@ -1,8 +1,8 @@
 'use client';
+
 import React, { useState } from 'react';
 import { HistoryStrip } from './history/HistoryStrip';
 import { GenerationPanel } from './control-panel/GenerationPanel';
-import { PromptDetailCard } from './results/PromptDetailCard';
 import { ResultsGrid } from './results/ResultsGrid';
 
 export function StudioContainer({ initialGenerations }) {
@@ -13,60 +13,51 @@ export function StudioContainer({ initialGenerations }) {
   const handleGenerate = async (params) => {
     setIsGenerating(true);
     try {
-      const res = await fetch('/api/generate', {
+      const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(params)
+        body: JSON.stringify(params),
       });
-      const newGens = await res.json();
-      const updatedGens = [...newGens, ...generations];
-      setGenerations(updatedGens);
-      setActiveGeneration(newGens[0]);
-    } catch (e) {
-      console.error(e);
+      const data = await response.json();
+      
+      setGenerations(prev => [...data.generations, ...prev]);
+      if (data.generations.length > 0) {
+        setActiveGeneration(data.generations[0]);
+      }
+    } catch (error) {
+      console.error('Generation failed:', error);
     } finally {
       setIsGenerating(false);
     }
   };
 
+  // We show up to 7 images in the ResultsGrid, plus 1 prompt card = 8 grid items
+  const resultsList = generations.slice(0, 7);
+
   return (
-    <main className="flex-1 flex flex-col w-full">
-      {/* Top History Strip */}
-      <div className="w-full">
-        <HistoryStrip 
-          generations={generations} 
-          activeId={activeGeneration?.id}
-          onSelect={setActiveGeneration}
-        />
-      </div>
-      
-      <div className="flex-1 flex flex-col lg:flex-row w-full max-w-[1600px] mx-auto relative">
-        {/* Left Control Panel (Sticky Sidebar) */}
-        <aside className="w-full lg:w-[340px] xl:w-[380px] flex-shrink-0 bg-[#FFF5F2] border-r border-slate-200 lg:min-h-[calc(100vh-140px)] shadow-sm z-0 relative">
-          <div className="p-6 lg:sticky lg:top-[73px]">
-            <GenerationPanel onGenerate={handleGenerate} isGenerating={isGenerating} />
-          </div>
-        </aside>
+    <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#FAFAFA]">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative max-w-[1600px] mx-auto w-full">
+        {/* Left Sidebar */}
+        <div className="w-full lg:w-[360px] flex-shrink-0 p-6 overflow-y-auto hide-scrollbar z-20">
+          <GenerationPanel onGenerate={handleGenerate} isGenerating={isGenerating} />
+        </div>
         
-        {/* Right Content Area (Prompt + Grid) */}
-        <div className="flex-1 p-6 lg:p-8 flex flex-col gap-8 min-w-0 bg-[#FAFAFA]">
-          <div className="w-full max-w-5xl">
-            <PromptDetailCard 
-              prompt={activeGeneration?.prompt} 
-              model={activeGeneration?.model} 
-            />
-          </div>
+        {/* Right Content Area */}
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+          {/* Fading gradient behind history strip to match design */}
+          <div className="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-[#FAFAFA] to-transparent z-20 pointer-events-none hidden lg:block"></div>
           
-          <div className="flex-1">
-            <ResultsGrid 
-              results={generations} 
-              activeId={activeGeneration?.id}
-              onSelect={setActiveGeneration}
-              isLoading={isGenerating}
-            />
+          <HistoryStrip 
+            generations={generations} 
+            activeId={activeGeneration?.id}
+            onSelect={setActiveGeneration}
+          />
+          
+          <div className="flex-1 overflow-y-auto hide-scrollbar pt-2">
+            <ResultsGrid results={resultsList} activeGeneration={activeGeneration} />
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
