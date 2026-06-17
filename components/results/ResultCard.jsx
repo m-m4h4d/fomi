@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export function ResultCard({ result }) {
   return (
-    <div className="relative w-full aspect-[3/4] rounded-[24px] overflow-hidden group bg-slate-100">
+    <div className="relative w-full aspect-[3/4] rounded-[24px] overflow-hidden group bg-slate-100 dark:bg-slate-900 transition-colors duration-200">
       <Image 
         src={result.url} 
         alt="Generated content" 

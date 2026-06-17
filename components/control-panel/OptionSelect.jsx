@@ -7,7 +7,7 @@ export function OptionSelect({ value, options, onChange, ariaLabel, labelPrefix 
       <select 
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full appearance-none bg-white rounded-xl pl-3 pr-8 py-2 text-[12px] font-medium text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#E08F7E] cursor-pointer"
+        className="w-full appearance-none bg-white dark:bg-[#111111] rounded-xl pl-3 pr-8 py-2 text-[12px] font-medium text-slate-800 dark:text-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#E08F7E] cursor-pointer transition-colors duration-200"
         aria-label={ariaLabel}
       >
         {options.map((opt) => (

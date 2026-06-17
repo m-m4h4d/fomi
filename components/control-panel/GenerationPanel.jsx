@@ -25,7 +25,7 @@ export function GenerationPanel({ onGenerate, isGenerating }) {
   };
 
   return (
-    <div className="flex flex-col gap-5 w-full bg-[#FAF0ED] rounded-[32px] p-6 shadow-sm">
+    <div className="flex flex-col gap-5 w-full bg-[#FAF0ED] dark:bg-[#1c1412] rounded-[32px] p-6 shadow-sm transition-colors duration-200">
       <ModeToggle value={mode} onChange={setMode} />
       
       <div className="mt-1 mb-4">

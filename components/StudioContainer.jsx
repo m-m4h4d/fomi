@@ -35,7 +35,7 @@ export function StudioContainer({ initialGenerations }) {
   const resultsList = generations.slice(0, 7);
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#FAFAFA]">
+    <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#FAFAFA] dark:bg-black transition-colors duration-200">
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative max-w-[1600px] mx-auto w-full">
         {/* Left Sidebar */}
         <div className="w-full lg:w-[360px] flex-shrink-0 p-6 overflow-y-auto hide-scrollbar z-20">
@@ -45,7 +45,7 @@ export function StudioContainer({ initialGenerations }) {
         {/* Right Content Area */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
           {/* Fading gradient behind history strip to match design */}
-          <div className="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-[#FAFAFA] to-transparent z-20 pointer-events-none hidden lg:block"></div>
+          <div className="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-[#FAFAFA] dark:from-black to-transparent z-20 pointer-events-none hidden lg:block"></div>
           
           <HistoryStrip 
             generations={generations} 
