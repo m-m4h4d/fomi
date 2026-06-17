@@ -1,39 +1,63 @@
-# Fomi
+# Fomi AI Content Generation Page
 
-Tarum Frontend developer technical assessment. Responsive AI content generation webpage for Fomi.art
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A Next.js application replicating the Fomi AI Content Generation Studio mockup.
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Open** [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses the Next.js App Router (JavaScript) and Tailwind CSS with standard component organization:
 
-## Learn More
+- `app/` - Next.js routing, layouts, and pages.
+- `app/api/generations/route.js` - Mock GET API returning static initial generations.
+- `app/api/generate/route.js` - Mock POST API returning newly generated content.
+- `components/` - UI components split by feature:
+  - `layout/` - Shell components (`Navbar.jsx`).
+  - `history/` - Top sliding thumbnail strip (`HistoryStrip.jsx`, `HistoryThumbnail.jsx`).
+  - `control-panel/` - Left configuration sidebar (`GenerationPanel.jsx`, etc.).
+  - `results/` - Right side display (`PromptDetailCard.jsx`, `ResultsGrid.jsx`, `ResultCard.jsx`).
+  - `ui/` - Reusable primitives (`Button.jsx`, `Badge.jsx`).
 
-To learn more about Next.js, take a look at the following resources:
+## Mock API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **GET `/api/generations`**: Returns an initial set of mock image/video generations to populate the studio on load.
+- **POST `/api/generate`**: Simulates a 2-second processing delay and returns a new set of mock generations matching the requested `numImages` and type. The returned objects are prepended to the client-side state.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Design Decisions & Assumptions
 
-## Deploy on Vercel
+1. **Icons**: I used `lucide-react` for clean, scalable SVG icons that match the mockup's line-art style (e.g., spark, folder, image, video).
+2. **Avatars/Placeholders**: Used Unsplash Source for high-quality, royalty-free placeholder generation images.
+3. **Data Fetching**: The initial data load uses server-side data from the mock route to avoid a client-side flash of empty content. Subsequent interactions use client-side fetches.
+4. **CSS Grid vs Flexbox**: I opted for a hybrid layout. The main shell is a Flex layout to allow the sidebar to stick cleanly, while the results grid uses CSS Grid for responsive columns.
+5. **Typescript**: The Next.js boilerplate generated TypeScript by default, which I cleaned up and reverted to pure JavaScript `.jsx` to strictly follow the prompt requirements.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Responsiveness Testing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+I have explicitly styled and verified the layout across the following breakpoints using Tailwind utilities and Chrome DevTools:
+
+- **Mobile (320px - 640px)**
+  - The Navbar collapses non-essential buttons and logo text.
+  - The Control Panel (sidebar) stacks on top of the Results Grid (`flex-col`).
+  - The Results Grid collapses to a single column (`grid-cols-1`).
+  - The History strip is horizontally scrollable with hidden scrollbars for clean swiping.
+- **Tablet (~768px)**
+  - The Results Grid expands to 2 columns (`md:grid-cols-3`).
+  - Navigation elements re-appear appropriately.
+- **Desktop (~1280px)**
+  - Layout transitions to the core design: Left sidebar (`w-[340px]`) alongside the main content area (`lg:flex-row`).
+  - Results grid adjusts to 3 columns.
+- **Large Screens (~1536px+)**
+  - Content container is constrained (`max-w-[1600px]`) and centered to avoid awkward stretching.
+  - Results Grid expands to 4 columns (`xl:grid-cols-4`).
