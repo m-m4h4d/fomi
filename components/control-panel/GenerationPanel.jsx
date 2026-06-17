@@ -28,7 +28,7 @@ export function GenerationPanel({ onGenerate, isGenerating }) {
     <div className="flex flex-col gap-5 w-full bg-[#FAF0ED] dark:bg-[#1c1412] rounded-[32px] p-6 shadow-sm transition-colors duration-200">
       <ModeToggle value={mode} onChange={setMode} />
       
-      <div className="mt-1 mb-4">
+      <div className="mt-1 mb-2">
         <PromptInput 
           value={prompt} 
           onChange={setPrompt} 
@@ -42,11 +42,10 @@ export function GenerationPanel({ onGenerate, isGenerating }) {
           value={numImages} 
           onChange={setNumImages}
           ariaLabel="Number of generations"
-          labelPrefix="# Images"
           options={[
-            { label: '1', value: '1' },
-            { label: '2', value: '2' },
-            { label: '4', value: '4' },
+            { label: '# Images', value: '1' },
+            { label: '# 2 Images', value: '2' },
+            { label: '# 4 Images', value: '4' },
           ]} 
         />
         <OptionSelect 
@@ -64,7 +63,7 @@ export function GenerationPanel({ onGenerate, isGenerating }) {
           value={model} 
           onChange={setModel}
           ariaLabel="Model selection"
-          labelPrefix="Model"
+          labelPrefix="Model:"
           options={[
             { label: 'Name', value: 'fomi-v1' },
             { label: 'Fast', value: 'fomi-fast' },

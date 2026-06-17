@@ -19,20 +19,25 @@ export async function POST(req) {
     // Simulate short delay
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    const newGenerations = Array.from({ length: numImages || 1 }).map((_, i) => {
+    const results = Array.from({ length: numImages || 1 }).map((_, i) => {
       const randomImg = placeholderImages[Math.floor(Math.random() * placeholderImages.length)];
       return {
-        id: `gen-${Date.now()}-${i}`,
-        type: type || 'image',
-        url: randomImg,
-        thumbnailUrl: randomImg.replace('w=800', 'w=200'),
-        prompt: prompt || 'A newly generated piece of art.',
-        model: model || 'Fomi v1',
-        createdAt: new Date().toISOString()
+        id: `res-${Date.now()}-${i}`,
+        url: randomImg
       };
     });
 
-    return NextResponse.json(newGenerations);
+    const newGeneration = {
+      id: `gen-${Date.now()}`,
+      type: type || 'image',
+      thumbnailUrl: results[0].url.replace('w=800', 'w=200'),
+      prompt: prompt || 'A newly generated piece of art.',
+      model: model || 'Fomi v1',
+      createdAt: new Date().toISOString(),
+      results
+    };
+
+    return NextResponse.json({ generation: newGeneration });
   } catch (_error) {
     return NextResponse.json({ error: 'Failed to generate' }, { status: 500 });
   }

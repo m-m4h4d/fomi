@@ -20,9 +20,9 @@ export function StudioContainer({ initialGenerations }) {
       });
       const data = await response.json();
       
-      setGenerations(prev => [...data.generations, ...prev]);
-      if (data.generations.length > 0) {
-        setActiveGeneration(data.generations[0]);
+      setGenerations(prev => [data.generation, ...prev]);
+      if (data.generation) {
+        setActiveGeneration(data.generation);
       }
     } catch (error) {
       console.error('Generation failed:', error);
@@ -31,8 +31,7 @@ export function StudioContainer({ initialGenerations }) {
     }
   };
 
-  // We show up to 7 images in the ResultsGrid, plus 1 prompt card = 8 grid items
-  const resultsList = generations.slice(0, 7);
+  const resultsList = activeGeneration?.results || [];
 
   return (
     <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#FAFAFA] dark:bg-black transition-colors duration-200">
