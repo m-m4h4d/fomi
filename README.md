@@ -1,15 +1,17 @@
 # Fomi AI Content Generation Page
 
-A Next.js application replicating the Fomi AI Content Generation Studio mockup.
+A Next.js application replicating the Fomi AI Content Generation Studio mockup. Tarum Frontend developer technical assessment. Responsive AI content generation webpage for Fomi.art
 
 ## Getting Started
 
 1. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Run the development server:**
+
    ```bash
    npm run dev
    ```
